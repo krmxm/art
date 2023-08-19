@@ -1,7 +1,8 @@
 const forms = () => {
     const form = document.querySelectorAll('form'),
           inputs = document.querySelectorAll('input'),
-          uploud = document.querySelectorAll('[name="upload"]');
+          textareas = document.querySelectorAll('textarea'),
+          upload = document.querySelectorAll('[name="upload"]');
 
 
     // checkNumInputs('input[name="user_phone"]');
@@ -34,12 +35,15 @@ const forms = () => {
         inputs.forEach(item => {
             item.value = '';
         });
-        uploud.forEach(item => {
+        upload.forEach(item => {
             item.previousElementSibling.textContent = 'Файл не выбран';
+        });
+        textareas.forEach(item => {
+            item.value = '';
         });
     };
 
-    uploud.forEach(item => {
+    upload.forEach(item => {
         item.addEventListener('input', () => {
             console.log(item.files[0]);
             let dots;
