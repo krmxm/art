@@ -6,7 +6,6 @@ const mask = (selector) => {
             def = matrix.replace(/\D/g, ''),
             val = this.value.replace(/\D/g, '');
 
-            console.log(def.length);
         
         if (def.length >= val.length) {
             val = def;
@@ -17,7 +16,13 @@ const mask = (selector) => {
         });
     }
 
-    createMask();
+    let inputs = document.querySelectorAll(selector);
+
+    inputs.forEach(input => {
+        input.addEventListener('input', createMask);
+        input.addEventListener('focus', createMask);
+    });
+
 };
 
 export default mask;
