@@ -12,27 +12,58 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _services_requests__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/requests */ "./src/js/services/requests.js");
+
 const calc = (size, material, options, promocode, result) => {
   const sizeBlock = document.querySelector(size),
     materialBlock = document.querySelector(material),
     optionsBlock = document.querySelector(options),
     promocodeBlock = document.querySelector(promocode),
     resultBlock = document.querySelector(result);
-  let sum = 0;
-  const calcFunc = () => {
-    sum = Math.round(+sizeBlock.value * +materialBlock.value) + +optionsBlock.value;
-    if (sizeBlock.value == '' || materialBlock.value == '') {
-      resultBlock.textContent = 'Пожалуйста, выберите размер и материал картины';
-    } else if (promocodeBlock.value == 'IWANTPOPART') {
-      resultBlock.textContent = Math.round(sum * 0.7);
-    } else {
-      resultBlock.textContent = sum;
-    }
-  };
-  sizeBlock.addEventListener('change', calcFunc);
-  materialBlock.addEventListener('change', calcFunc);
-  optionsBlock.addEventListener('change', calcFunc);
-  promocodeBlock.addEventListener('input', calcFunc);
+  let sum = 0,
+    sizeValue = '',
+    materialValue = '',
+    optionValue = '';
+  function cahngePram(event, elem) {
+    elem.addEventListener(event, e => {
+      const target = e.target,
+        select = target.id;
+      function calcFunc(state) {
+        console.log(state[select]);
+        for (let key in state[select]) {
+          if (key === elem.value) {
+            switch (select) {
+              case "size":
+                sizeValue = state[select][key];
+                break;
+              case "material":
+                materialValue = state[select][key];
+                break;
+              case "options":
+                optionValue = state[select][key];
+                break;
+            }
+          }
+          console.log(state[select][key]);
+        }
+        sum = Math.round(+sizeBlock.value * +materialBlock.value) + +optionsBlock.value;
+        if (sizeBlock.value == '' || materialBlock.value == '') {
+          resultBlock.textContent = 'Пожалуйста, выберите размер и материал картины';
+        } else if (promocodeBlock.value == 'IWANTPOPART') {
+          resultBlock.textContent = Math.round(sum * 0.7);
+        } else {
+          resultBlock.textContent = sum;
+        }
+      }
+      (0,_services_requests__WEBPACK_IMPORTED_MODULE_0__.getResource)('../../assets/calcPrice.json').then(res => {
+        calcFunc(res);
+      }).catch(e => console.error(e));
+    });
+  }
+  cahngePram('change', sizeBlock);
+  cahngePram('change', materialBlock);
+  cahngePram('change', optionsBlock);
+  cahngePram('input', promocode);
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (calc);
 
