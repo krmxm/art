@@ -18,8 +18,11 @@ const showMoreCards = (trigger, wrapper) => {
 
     btn.addEventListener('click', function() {
         getResourse('http://localhost:3000/styles')
-        .then(res => createCards(res))
+        .then(res => {
+            createCards(res);
+        })
         .catch(error => console.log(error));
+
 
         this.remove();
     });
