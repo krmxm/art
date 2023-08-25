@@ -1,10 +1,12 @@
 import {postData} from "../services/requests";
 
-const forms = () => {
+const forms = (stateForForm) => {
     const form = document.querySelectorAll('form'),
           inputs = document.querySelectorAll('input'),
           textareas = document.querySelectorAll('textarea'),
-          upload = document.querySelectorAll('[name="upload"]');
+          upload = document.querySelectorAll('[name="upload"]'),
+          selects = document.querySelectorAll('select'),
+          price = document.querySelector('.calc-price');
 
 
     // checkNumInputs('input[name="user_phone"]');
@@ -34,6 +36,10 @@ const forms = () => {
         textareas.forEach(item => {
             item.value = '';
         });
+        selects.forEach(item => {
+            item.value = '';
+        });
+        price.textContent = 'Для расчета нужно выбрать размер картины и материал картины';
     };
 
     upload.forEach(item => {
@@ -70,6 +76,11 @@ const forms = () => {
             statusMessage.appendChild(textMessage);
 
             const formData = new FormData(item);
+            if(item.getAttribute('data-calc') === 'parm') {
+                for(let key in stateForForm) {
+                    formData.append(key, stateForForm[key]);
+                }
+            }
             let api;
             item.closest('.popup-design') || item.classList.contains('calc_form') ? api = path.designer : api = path.question;
             console.log(api);    
