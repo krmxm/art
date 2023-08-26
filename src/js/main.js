@@ -6,6 +6,7 @@ import checkTextInputs from "./modules/checkTextInputs";
 import showMoreCards from "./modules/showMoreCards";
 import calc from "./modules/calc";
 import filter from "./modules/filter";
+import pictureSize from "./modules/pictureSize";
 
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -23,4 +24,5 @@ window.addEventListener('DOMContentLoaded', () => {
     showMoreCards('.button-styles', '#styles .row');
     calc('#size', '#material', '#options', '.promocode', '.calc-price', state, '#button-calc');
     filter();
+    pictureSize('.sizes-block');
 });
